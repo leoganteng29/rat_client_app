@@ -29,10 +29,6 @@ jobs:
       - name: Overwrite Main Dart
         run: cp lib/main.dart lib/main.dart
 
-      # HANYA TAMBAH LIBRARY YANG AMAN (TANPA BATTERY_PLUS)
-      - name: Add Dependencies
-        run: flutter pub add socket_io_client device_info_plus permission_handler
-
       - name: Build APK
         run: flutter build apk --release
 
