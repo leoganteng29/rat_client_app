@@ -21,14 +21,12 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          # KITA PAKAI VERSI TERBARU (V2 OTOMATIS)
-          flutter-version: '3.22.0' 
+          flutter-version: '3.22.0'
 
       - name: Initialize Project
         run: flutter create --platforms=android --org com.example --project-name rat_client .
 
-      - name: Overwrite Main Dart
-        run: cp lib/main.dart lib/main.dart
+      # (Baris Overwrite Main Dart sudah dihapus)
 
       - name: Build APK
         run: flutter build apk --release
