@@ -23,11 +23,22 @@ jobs:
         with:
           flutter-version: '3.22.0'
 
+      # 1. Buat project baru (V2)
       - name: Initialize Project
         run: flutter create --platforms=android --org com.example --project-name rat_client .
 
-      # (Baris Overwrite Main Dart sudah dihapus)
+      # 2. Ambil dependencies
+      - name: Get Dependencies
+        run: flutter pub get
 
+      # 3. Timpa main.dart kamu (pastikan file aslimu ada di lib/main.dart)
+      - name: Overwrite Main Dart
+        run: |
+          if [ -f "main.dart" ]; then
+            cp main.dart lib/main.dart
+          fi
+
+      # 4. Build
       - name: Build APK
         run: flutter build apk --release
 
