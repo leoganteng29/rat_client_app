@@ -10,35 +10,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Java
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
-          java-version: '11'
+          java-version: '17' # <--- UBAH DARI 11 JADI 17
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.19.0'
 
-      - name: Create Flutter Project Structure
-        run: |
-          flutter create temp_app
-          cp -r temp_app/android ./
-          cp -r temp_app/ios ./
-          cp temp_app/pubspec.lock ./ || true
-          rm -rf temp_app
-
       - name: Get Dependencies
         run: flutter pub get
+
+      - name: Generate Android Folder
+        run: flutter create --platforms=android .
 
       - name: Build APK
         run: flutter build apk --release
 
       - name: Upload APK
-        uses: actions/upload-artifact@v4   # <--- INI YANG DIUBAH JADI v4
+        uses: actions/upload-artifact@v4
         with:
           name: rat-apk
           path: build/app/outputs/flutter-apk/app-release.apk
