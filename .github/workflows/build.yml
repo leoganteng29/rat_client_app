@@ -23,8 +23,9 @@ jobs:
         with:
           flutter-version: '3.19.0'
 
-      - name: Initialize Project
-        run: flutter create --platforms=android --org com.example --project-name rat_client .
+      # TRIK: Menggunakan template V2 dari komunitas
+      - name: Use Flutter V2 Template
+        uses: Ashley-Alvares/flutter_v2_template@v1
 
       - name: Overwrite Main Dart
         run: cp lib/main.dart lib/main.dart
