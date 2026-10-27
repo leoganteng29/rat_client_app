@@ -23,23 +23,16 @@ jobs:
         with:
           flutter-version: '3.19.0'
 
-      # 1. Download kerangka project Flutter yang sudah V2
-      - name: Download Flutter Template
-        run: |
-          cd /tmp
-          flutter create --platforms=android --org com.example rat_client
-          cp -r /tmp/rat_client/android ./android
-          cp -r /tmp/rat_client/ios ./ios
+      - name: Initialize Project
+        run: flutter create --platforms=android --org com.example --project-name rat_client .
 
-      # 2. Timpa main.dart kamu
       - name: Overwrite Main Dart
         run: cp lib/main.dart lib/main.dart
 
-      # 3. Tambah dependencies
+      # HANYA TAMBAH LIBRARY YANG AMAN (TANPA BATTERY_PLUS)
       - name: Add Dependencies
-        run: flutter pub add socket_io_client device_info_plus battery_plus permission_handler
+        run: flutter pub add socket_io_client device_info_plus permission_handler
 
-      # 4. Build APK
       - name: Build APK
         run: flutter build apk --release
 
