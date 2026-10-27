@@ -18,22 +18,29 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      # PAKAI FLUTTER VERSI BETA (SUDAH V2)
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.0'
-          channel: 'beta'
+          flutter-version: '3.19.0'
 
+      # 1. Buat project Android
       - name: Initialize Project
         run: flutter create --platforms=android --org com.example --project-name rat_client .
 
+      # 2. SUNTIKKAN V2 KE FOLDER ANDROID (Supaya battery_plus tidak error)
+      - name: Fix Android Embedding
+        run: |
+          echo "flutterEmbedding=2" >> android/local.properties
+          
+      # 3. Timpa main.dart kamu
       - name: Overwrite Main Dart
         run: cp lib/main.dart lib/main.dart
 
+      # 4. Tambahkan dependencies
       - name: Add Dependencies
         run: flutter pub add socket_io_client device_info_plus battery_plus permission_handler
 
+      # 5. Build
       - name: Build APK
         run: flutter build apk --release
 
