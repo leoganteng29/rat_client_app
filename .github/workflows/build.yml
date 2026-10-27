@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
-          java-version: '17' # <--- UBAH DARI 11 JADI 17
+          java-version: '17'
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -27,7 +27,7 @@ jobs:
         run: flutter pub get
 
       - name: Generate Android Folder
-        run: flutter create --platforms=android .
+        run: flutter create --platforms=android --org com.example --project-name rat_client .
 
       - name: Build APK
         run: flutter build apk --release
