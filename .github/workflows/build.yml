@@ -23,11 +23,11 @@ jobs:
         with:
           flutter-version: '3.19.0'
 
-      - name: Get Dependencies
-        run: flutter pub get
-
       - name: Generate Android Folder
         run: flutter create --platforms=android --org com.example --project-name rat_client .
+
+      - name: Get Dependencies
+        run: flutter pub get
 
       - name: Build APK
         run: flutter build apk --release
